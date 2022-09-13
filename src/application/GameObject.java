@@ -1,50 +1,42 @@
 package application;
 
+import java.util.Random;
+
 import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
-/*
-* This class is the basic object in Game.
-* It has the basic property for game object,
-* such like position, width, height, image.
-* It also has some basic method : draw, move.
-*/
+
 public abstract class GameObject {
 	protected double x;
-    protected double y;
+    protected int maxX, minX;
     protected int speed;
-    protected int posSpeed;
-    protected double width;
-    protected double height;
-    protected Image image;
-    protected ImageView imagev;
+    protected int lastTime;
+    protected int changeDirTime;
     protected int xDirection;
-    protected int yDirection;
-    boolean a = false;
+    protected int pose;
+    protected ImageView imagev;
+    private Random rand = new Random();
 
-    public GameObject(double x,double y,int speed,int posspeed,double width,double height,Image image, ImageView imagev, int xdirect,int ydirect)
+    public GameObject(int speed, ImageView imagev, int xdirect, int maxX, int minX)
     {
-        this.x = x;
-        this.y = y;
+        this.x = 0;
+        this.maxX = maxX;
+        this.minX = minX;
         this.speed = speed;
-        this.posSpeed = posspeed;
-        this.width = width;
-        this.height = height;
-        this.image = image;
-        this.imagev = imagev;
+        this.lastTime = 0;
+        this.changeDirTime = rand.nextInt(10) + 5;
         this.xDirection = xdirect;
-        this.yDirection = ydirect;
+        this.pose = 0;
+        this.imagev = imagev;
+        
     }
 
-    public void draw(){
+    public void setTranslate(){
     	imagev.setTranslateX(x);
-        imagev.setTranslateY(y);
     }
-    public void move(double deltaX,double deltaY){
-    	x+=deltaX;
-    	y+=deltaY;
+    
+    public void setTime(int time) {
+    	lastTime = time;
+    	changeDirTime = rand.nextInt(10) + 5;
     }
-    public void resetPos(int xpos){
-    	x=xpos;
-    	y=0;
-    }
+    
+    public abstract void setImage();
 }

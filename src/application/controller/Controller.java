@@ -1,8 +1,10 @@
-package application;
+package application.controller;
 
 import java.io.File;
 import java.util.Random;
 
+import application.GameManager;
+import application.ImageUtility;
 import javafx.animation.AnimationTimer;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -10,47 +12,33 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 public class Controller {
 	
 	
-	@FXML				//main pane
+	@FXML
 	private ImageView 	tree, butterfly, gray, lightBrown, white, waterMelon, picture, info, shop, 
 						mainMoney1, mainMoney2, mainMoney3, mainMoney4, mainMoney5, 
 						mainThing1, mainThing2, mainThing3, mainThing4, mainThing5, 
 						mt1_money1, mt2_money1, mt3_money1, mt4_money1, mt5_money1, 
 						mt1_money2, mt2_money2, mt3_money2, mt4_money2, mt5_money2, 
-						fruit1, fruit2, fruit3, fruit4, bug1, bug2,
-	
-						//info pane
-						infoClose,
-	
-						//shop pane
-						shopClose, thing1, thing2, thing3, thing4, thing5, detail1, detail2, detail3, detail4, detail5, 
-						smoney1, smoney2, smoney3, smoney4, smoney5,
-	
-						//picture pane
-						pictureClose;
-	
-	@FXML
-	private Pane mainPane, infoPane, shopPane, picturePane;
+						fruit1, fruit2, fruit3, fruit4, bug1, bug2;
 
 	private AnimationTimer rectangleAnimation;
 	private MediaPlayer mediaplayer;
 	private GameManager gameManager;
+	private SceneController sceneController;
 	private Random rand = new Random();
 	
-	private Image numberImage[] = {ImageUtility.num0, ImageUtility.num1, ImageUtility.num2, ImageUtility.num3, ImageUtility.num4, ImageUtility.num5, ImageUtility.num6, ImageUtility.num7, ImageUtility.num8, ImageUtility.num9};
-	private Pane[] panes = new Pane[4];
+	private static Image numberImage[] = {ImageUtility.num0, ImageUtility.num1, ImageUtility.num2, ImageUtility.num3, ImageUtility.num4, ImageUtility.num5, ImageUtility.num6, ImageUtility.num7, ImageUtility.num8, ImageUtility.num9};
 	private ImageView[] fruits = new ImageView[4];
-	private ImageView[][] moneys = new ImageView[5][2];
+	private ImageView[] moneys = new ImageView[5];
 	private ImageView[][] things = new ImageView[5][2];
 	
-	private int currentMoney = 100;
-	private int countThing1 = 0, countThing2 = 0, countThing3 = 0;
+	private static int currentMoney = 100;
+	private static int[] countThings = {0, 0, 0, 0, 0};
 	private int treeSec = 0;
 	private long treeTime = 0;
 	private boolean seed = false;
@@ -61,21 +49,16 @@ public class Controller {
 		gameManager = new GameManager(white, gray, waterMelon, lightBrown, butterfly);
 		mediaplayer = new MediaPlayer(new Media(new File("src/resources/sound/dogsound.mp3").toURI().toString()));
 		
-		panes[0] = mainPane;
-		panes[1] = infoPane;
-		panes[2] = shopPane;
-		panes[3] = picturePane;
-		
 		fruits[0] = fruit1;
 		fruits[1] = fruit2;
 		fruits[2] = fruit3;
 		fruits[3] = fruit4;
 		
-		moneys[0][0] = mainMoney1;	moneys[0][1] = smoney1;
-		moneys[1][0] = mainMoney2;	moneys[1][1] = smoney2;
-		moneys[2][0] = mainMoney3;	moneys[2][1] = smoney3;
-		moneys[3][0] = mainMoney4;	moneys[3][1] = smoney4;
-		moneys[4][0] = mainMoney5;	moneys[4][1] = smoney5;
+		moneys[0] = mainMoney1;
+		moneys[1] = mainMoney2;
+		moneys[2] = mainMoney3;
+		moneys[3] = mainMoney4;
+		moneys[4] = mainMoney5;
 		
 		things[0][0] = mt1_money1; things[0][1] = mt1_money2;
 		things[1][0] = mt2_money1; things[1][1] = mt2_money2;
@@ -157,6 +140,7 @@ public class Controller {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setScene(Scene scene) {
+		sceneController = SceneController.getInstance(scene);
 		
 		/* mouse enter */
 		picture.setOnMouseEntered(new EventHandler() {
@@ -180,27 +164,6 @@ public class Controller {
 			}
 		});
 		
-		infoClose.setOnMouseEntered(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				infoClose.setImage(ImageUtility.closeBtn2);
-			}
-		});
-		
-		shopClose.setOnMouseEntered(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				shopClose.setImage(ImageUtility.closeBtn2);
-			}
-		});
-		
-		pictureClose.setOnMouseEntered(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				pictureClose.setImage(ImageUtility.closeBtn2);
-			}
-		});
-		
 		butterfly.setOnMouseEntered(new EventHandler() {
 			@Override
 			public void handle(Event arg0) {
@@ -219,30 +182,6 @@ public class Controller {
 			@Override
 			public void handle(Event arg0) {
 				gameManager.changeSpeed(0, 2);
-			}
-		});
-		
-		thing1.setOnMouseEntered(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				detail1.setVisible(true);
-				thing1.setImage(ImageUtility.thing1b);
-			}
-		});
-		
-		thing2.setOnMouseEntered(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				detail2.setVisible(true);
-				thing2.setImage(ImageUtility.thing2b);
-			}
-		});
-		
-		thing3.setOnMouseEntered(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				detail3.setVisible(true);
-				thing3.setImage(ImageUtility.thing3b);
 			}
 		});
 		
@@ -290,27 +229,6 @@ public class Controller {
 			}
 		});
 		
-		infoClose.setOnMouseExited(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				infoClose.setImage(ImageUtility.closeBtn);
-			}
-		});
-		
-		shopClose.setOnMouseExited(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				shopClose.setImage(ImageUtility.closeBtn);
-			}
-		});
-		
-		pictureClose.setOnMouseExited(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				pictureClose.setImage(ImageUtility.closeBtn);
-			}
-		});
-		
 		butterfly.setOnMouseExited(new EventHandler() {
 			@Override
 			public void handle(Event arg0) {
@@ -329,30 +247,6 @@ public class Controller {
 			@Override
 			public void handle(Event arg0) {
 				gameManager.changeSpeed(40, 2);
-			}
-		});
-		
-		thing1.setOnMouseExited(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				detail1.setVisible(false);
-				thing1.setImage(ImageUtility.thing1a);
-			}
-		});
-		
-		thing2.setOnMouseExited(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				detail2.setVisible(false);
-				thing2.setImage(ImageUtility.thing2a);
-			}
-		});
-		
-		thing3.setOnMouseExited(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				detail3.setVisible(false);
-				thing3.setImage(ImageUtility.thing3a);
 			}
 		});
 		
@@ -382,42 +276,21 @@ public class Controller {
 		info.setOnMouseClicked(new EventHandler() {
 			@Override
 			public void handle(Event arg0) {
-				setPaneVisible(1, false);
-			}
-		});
-		
-		infoClose.setOnMouseClicked(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				setPaneVisible(1, true);
+				sceneController.activate("info");
 			}
 		});
 		
 		shop.setOnMouseClicked(new EventHandler() {
 			@Override
 			public void handle(Event arg0) {
-				setPaneVisible(2, false);
-			}
-		});
-		
-		shopClose.setOnMouseClicked(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				setPaneVisible(2, true);
+				sceneController.activate("shop");
 			}
 		});
 		
 		picture.setOnMouseClicked(new EventHandler() {
 			@Override
 			public void handle(Event arg0) {
-				setPaneVisible(3, false);
-			}
-		});
-		
-		pictureClose.setOnMouseClicked(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				setPaneVisible(3, true);
+				sceneController.activate("picture");
 			}
 		});
 		
@@ -448,48 +321,13 @@ public class Controller {
 				playMedia();
 			}
 		});
-
-		thing1.setOnMouseClicked(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				if (currentMoney >= 10) {
-					changeMoney(currentMoney -= 10);
-					changeThingCount(0, ++countThing1);
-				} else {
-					System.out.println("thing1 error!");
-				}
-			}
-		});
-		
-		thing2.setOnMouseClicked(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				if (currentMoney >= 20) {
-					changeMoney(currentMoney -= 20);
-					changeThingCount(1, countThing2 += 5);
-				} else {
-					System.out.println("thing2 error!");
-				}
-			}
-		});
-		
-		thing3.setOnMouseClicked(new EventHandler() {
-			@Override
-			public void handle(Event arg0) {
-				if (currentMoney >= 30) {
-					changeMoney(currentMoney -= 30);
-					changeThingCount(2, countThing3 += 5);
-				} else {
-					System.out.println("thing3 error!");
-				}
-			}
-		});
 		
 		mainThing1.setOnMouseClicked(new EventHandler() {
 			@Override
 			public void handle(Event arg0) {
-				if (seed == false && countThing1 >= 1) {
-					changeThingCount(0, --countThing1);
+				if (seed == false && countThings[0] >= 1) {
+					--countThings[0];
+					changeThingCount(0);
 					seed = true;
 					treeTimeChanged = true;
 				} else {
@@ -502,13 +340,14 @@ public class Controller {
 			@Override
 			public void handle(Event arg0) {
 				if (bug1.isVisible() == true || bug2.isVisible() == true) {
-					if (countThing2 >= 1) {
+					if (countThings[1] >= 1) {
 						if (bug1.isVisible() == true) {
 							bug1.setVisible(false);
 						} else if (bug2.isVisible() == true) {
 							bug2.setVisible(false);
 						}
-						changeThingCount(1, --countThing2);
+						--countThings[1];
+						changeThingCount(1);
 					}
 				} else {
 					System.out.println("mt2 error!");
@@ -519,8 +358,9 @@ public class Controller {
 		mainThing3.setOnMouseClicked(new EventHandler() {
 			@Override
 			public void handle(Event arg0) {
-				if (countThing3 >= 1) {
-					changeThingCount(2, --countThing3);
+				if (countThings[2] >= 1) {
+					--countThings[2];
+					changeThingCount(2);
 				} else {
 					System.out.println("mt3 error!");
 				}
@@ -564,44 +404,44 @@ public class Controller {
 		});
 	}
 	
-	public void changeMoney(int currentMoney) {
-		int[] moneyDigits = new int[5];
-		moneyDigits[0] = currentMoney / 10000;
-		moneyDigits[1] = (currentMoney - moneyDigits[0] * 10000) / 1000;
-		moneyDigits[2] = (currentMoney - moneyDigits[1] * 1000 - moneyDigits[0] * 10000) / 100;
-		moneyDigits[3] = (currentMoney - moneyDigits[2] * 100 - moneyDigits[1] * 1000 - moneyDigits[0] * 10000) / 10;
-		moneyDigits[4] = currentMoney - moneyDigits[3] * 10 - moneyDigits[2] * 100 - moneyDigits[1] * 1000 - moneyDigits[0] * 10000;
-		
-		for (int i=0; i<5; i++) {
-			for (int j=0; j<2; j++) {
-				moneys[i][j].setImage(numberImage[moneyDigits[i]]);
-			}
-		}
+	public Image[] getNumImage() {
+		return numberImage;
 	}
 	
-	public void changeThingCount(int thing, int count) {
+	public int getCurMoney() {
+		return currentMoney;
+	}
+	
+	public int setCurMoney(int money) {
+		currentMoney = money;
+		return currentMoney;
+	}
+	
+	public int[] getCountThings() {
+		return countThings;
+	}
+	
+	public void setCountThings(int thing, int count) {
+		countThings[thing] = count;
+	}
+	
+	public void changeMoney(int currentMoney) {
+		int tempMoney = currentMoney;
+		moneys[0].setImage(numberImage[tempMoney / 10000]);
+		tempMoney %= 10000;
+		moneys[1].setImage(numberImage[tempMoney / 1000]);
+		tempMoney %= 1000;
+		moneys[2].setImage(numberImage[tempMoney / 100]);
+		tempMoney %= 100;
+		moneys[3].setImage(numberImage[tempMoney / 10]);
+		tempMoney %= 10;
+		moneys[4].setImage(numberImage[tempMoney]);
+	}
+	
+	public void changeThingCount(int thing) {
+		int count = countThings[thing];
 		things[thing][0].setImage(numberImage[count / 10]);
 		things[thing][1].setImage(numberImage[count - (count / 10) * 10]);
-	}
-	
-	/**
-	 * 控制 pane 的顯示，pane 的代碼如下。
-	 * <ol start=0>
-	 * <li>main pane</li>
-	 * <li>info pane</li>
-	 * <li>shop pane</li>
-	 * <li>picture pane</li>
-	 * </ol>
-	 * 
-	 * @param pane	[0 ~ 4]
-	 * @param open	[true 顯示] [false 隱藏]
-	 */
-	public void setPaneVisible(int pane, boolean open) {
-		for (int i=0; i<panes.length; i++) {
-			if (i != pane) {
-				panes[i].setVisible(open);
-			}
-		}
 	}
 	
 	public void playMedia() {

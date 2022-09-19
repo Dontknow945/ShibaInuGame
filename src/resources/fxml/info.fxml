@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="p" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane fx:id="infoPane" prefHeight="630.0" prefWidth="980.0">
+         <children>
+            <ImageView fx:id="infobg" fitHeight="630.0" fitWidth="980.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/pbg.png" />
+               </image></ImageView>
+            <ImageView fx:id="infoClose" fitHeight="100.0" fitWidth="100.0" layoutX="880.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/close.png" />
+               </image></ImageView>
+         </children>
+      </Pane>
+   </children>
+</Pane>

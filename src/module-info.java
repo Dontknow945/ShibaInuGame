@@ -5,4 +5,5 @@ module TestJavaFx {
 	requires javafx.media;
 	
 	opens application to javafx.graphics, javafx.fxml;
+	opens application.controller to javafx.graphics, javafx.fxml;
 }

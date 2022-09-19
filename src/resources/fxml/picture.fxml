@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="p" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane fx:id="picturePane" prefHeight="630.0" prefWidth="980.0">
+         <children>
+            <ImageView fx:id="picturebg" fitHeight="630.0" fitWidth="980.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/pbg.png" />
+               </image></ImageView>
+            <ImageView fx:id="pictureClose" fitHeight="100.0" fitWidth="100.0" layoutX="880.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/close.png" />
+               </image></ImageView>
+            <ImageView fx:id="card1" fitHeight="229.0" fitWidth="154.0" layoutX="57.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/picture.png" />
+               </image></ImageView>
+            <ImageView fx:id="picture1" fitHeight="118.0" fitWidth="132.0" layoutX="73.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/lightBrown.png" />
+               </image></ImageView>
+            <ImageView fx:id="lightBrownDetail" fitHeight="25.0" fitWidth="132.0" layoutX="67.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/orid.png" />
+               </image></ImageView>
+            <ImageView fx:id="card5" fitHeight="229.0" fitWidth="154.0" layoutX="57.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/picture.png" />
+               </image></ImageView>
+            <ImageView fx:id="picture5" fitHeight="100.0" fitWidth="134.0" layoutX="67.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/WhiteDog.png" />
+               </image></ImageView>
+            <ImageView fx:id="whiteDetail" fitHeight="32.0" fitWidth="132.0" layoutX="67.0" layoutY="490.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="card2" fitHeight="229.0" fitWidth="154.0" layoutX="269.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/picture.png" />
+               </image></ImageView>
+            <ImageView fx:id="picture2" fitHeight="118.0" fitWidth="121.0" layoutX="294.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/GrayDog.png" />
+               </image></ImageView>
+            <ImageView fx:id="grayDetail" fitHeight="24.0" fitWidth="181.0" layoutX="281.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="card6" fitHeight="229.0" fitWidth="154.0" layoutX="269.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/picture.png" />
+               </image></ImageView>
+            <ImageView fx:id="picture6" fitHeight="118.0" fitWidth="121.0" layoutX="285.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="unknownDetail1" fitHeight="150.0" fitWidth="130.0" layoutX="281.0" layoutY="490.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="card3" fitHeight="229.0" fitWidth="154.0" layoutX="482.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/picture.png" />
+               </image></ImageView>
+            <ImageView fx:id="picture3" fitHeight="128.0" fitWidth="144.0" layoutX="488.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/BfDog.png" />
+               </image></ImageView>
+            <ImageView fx:id="butterflyDetail" fitHeight="24.0" fitWidth="192.0" layoutX="493.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="card7" fitHeight="229.0" fitWidth="154.0" layoutX="482.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/picture.png" />
+               </image></ImageView>
+            <ImageView fx:id="picture7" fitHeight="125.0" fitWidth="134.0" layoutX="493.0" layoutY="352.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="unknownDetail2" fitHeight="24.0" fitWidth="188.0" layoutX="494.0" layoutY="490.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="card4" fitHeight="229.0" fitWidth="154.0" layoutX="692.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/picture.png" />
+               </image></ImageView>
+            <ImageView fx:id="picture4" fitHeight="125.0" fitWidth="96.0" layoutX="725.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/WmDog.png" />
+               </image></ImageView>
+            <ImageView fx:id="watreMelonDetail" fitHeight="24.0" fitWidth="164.0" layoutX="706.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="card8" fitHeight="229.0" fitWidth="154.0" layoutX="692.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/picture.png" />
+               </image></ImageView>
+         </children>
+      </Pane>
+   </children>
+</Pane>

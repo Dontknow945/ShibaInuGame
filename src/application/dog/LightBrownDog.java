@@ -1,23 +1,16 @@
 package application.dog;
 
-import application.GameObject;
+import application.Dog;
 import application.ImageUtility;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class LightBrownDog extends GameObject {
-	private Image lightBrownPics[] = {ImageUtility.lightBrown, ImageUtility.lightBrownRight, ImageUtility.lightBrownLeft};
-	
+public class LightBrownDog extends Dog {
+
 	public LightBrownDog(ImageView view){
         super(40,view,1, 97, -770);
-    }
-	
-    @Override
-    public void setTranslate(){
-        super.setTranslate ();
-    }
-    
-    public void setImage(){
-		imagev.setImage(lightBrownPics[pose]);
+        
+        this.images[0] = ImageUtility.lightBrown;
+        this.images[1] = ImageUtility.lightBrownRight;
+        this.images[2] = ImageUtility.lightBrownLeft;
     }
 }

@@ -2,9 +2,10 @@ package application;
 
 import java.util.Random;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public abstract class GameObject {
+public abstract class Dog {
 	protected double x;
     protected int maxX, minX;
     protected int speed;
@@ -13,20 +14,19 @@ public abstract class GameObject {
     protected int xDirection;
     protected int pose;
     protected ImageView imagev;
+    protected Image[] images;
     private Random rand = new Random();
 
-    public GameObject(int speed, ImageView imagev, int xdirect, int maxX, int minX)
+    public Dog(int speed, ImageView imagev, int xdirect, int maxX, int minX)
     {
         this.x = 0;
         this.maxX = maxX;
         this.minX = minX;
         this.speed = speed;
-        this.lastTime = 0;
-        this.changeDirTime = rand.nextInt(10) + 5;
         this.xDirection = xdirect;
         this.pose = 0;
         this.imagev = imagev;
-        
+        this.images = new Image[3];
     }
 
     public void setTranslate(){
@@ -38,5 +38,15 @@ public abstract class GameObject {
     	changeDirTime = rand.nextInt(10) + 5;
     }
     
-    public abstract void setImage();
+    public void stop() {
+    	imagev.setImage(images[0]);
+    }
+    
+    public void turnRight() {
+    	imagev.setImage(images[1]);
+    }
+    
+    public void turnLeft() {
+    	imagev.setImage(images[2]);
+    }
 }

@@ -38,7 +38,7 @@ public class Controller {
 	private ImageView[][] things = new ImageView[5][2];
 	
 	private static int currentMoney = 100;
-	private static int[] countThings = {0, 0, 0, 0, 0};
+	private static int[] thingsCount = {0, 0, 0, 0, 0};
 	private static int gameTime = 0;
 
 	@FXML
@@ -67,8 +67,8 @@ public class Controller {
 		rectangleAnimation = new AnimationTimer() {
 			@Override
 			public void handle(long timestamp) {
-				gameManager.draw(timestamp);
 				gameTime = (int) (timestamp / 1000000000);
+				gameManager.draw(timestamp);
 				
 				if(treeInstance.getPlanted()) {
 					treeInstance.grow();
@@ -265,8 +265,8 @@ public class Controller {
 		mainThing1.setOnMouseClicked(new EventHandler() {
 			@Override
 			public void handle(Event arg0) {
-				if(countThings[0] >= 1 && !treeInstance.getPlanted()) {
-					--countThings[0];
+				if(thingsCount[0] >= 1 && !treeInstance.getPlanted()) {
+					--thingsCount[0];
 					changeThingCount(0);
 					treeInstance.setTime(gameTime);
 					treeInstance.setPlanted(true);
@@ -279,14 +279,14 @@ public class Controller {
 		mainThing2.setOnMouseClicked(new EventHandler() {
 			@Override
 			public void handle(Event arg0) {
-				if (bug1.isVisible() == true || bug2.isVisible() == true) {
-					if (countThings[1] >= 1) {
-						if (bug1.isVisible() == true) {
-							bug1.setVisible(false);
-						} else if (bug2.isVisible() == true) {
-							bug2.setVisible(false);
-						}
-						--countThings[1];
+				if (thingsCount[1] >= 1) {
+					if (bug1.isVisible()) {
+						bug1.setVisible(false);
+						--thingsCount[1];
+						changeThingCount(1);
+					} else if (bug2.isVisible()) {
+						bug2.setVisible(false);
+						--thingsCount[1];
 						changeThingCount(1);
 					}
 				} else {
@@ -298,8 +298,8 @@ public class Controller {
 		mainThing3.setOnMouseClicked(new EventHandler() {
 			@Override
 			public void handle(Event arg0) {
-				if (countThings[2] >= 1) {
-					--countThings[2];
+				if (thingsCount[2] >= 1) {
+					--thingsCount[2];
 					changeThingCount(2);
 				} else {
 					System.out.println("mt3 error!");
@@ -357,12 +357,12 @@ public class Controller {
 		return currentMoney;
 	}
 	
-	public int[] getCountThings() {
-		return countThings;
+	public int[] getThingsCount() {
+		return thingsCount;
 	}
 	
-	public void setCountThings(int thing, int count) {
-		countThings[thing] = count;
+	public void setThingsCount(int thing, int count) {
+		thingsCount[thing] = count;
 	}
 	
 	public int getGameTime() {
@@ -397,7 +397,7 @@ public class Controller {
 	}
 	
 	public void changeThingCount(int thing) {
-		int count = countThings[thing];
+		int count = thingsCount[thing];
 		things[thing][0].setImage(numberImage[count / 10]);
 		things[thing][1].setImage(numberImage[count - (count / 10) * 10]);
 	}

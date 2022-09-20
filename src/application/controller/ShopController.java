@@ -52,7 +52,7 @@ public class ShopController {
 			public void handle(Event arg0) {
 				SceneController.getInstance(scene).activate("start");
 				controller.changeMoney(controller.getCurMoney());
-				for(int i=0; i<controller.getCountThings().length; i++) {
+				for(int i=0; i<controller.getThingsCount().length; i++) {
 					controller.changeThingCount(i);
 				}
 			}
@@ -80,7 +80,7 @@ public class ShopController {
 				int money = controller.getCurMoney();
 				if (money >= 10) {
 					changeMoney(controller.setCurMoney(money -= 10));
-					controller.setCountThings(0, ++controller.getCountThings()[0]);
+					controller.setThingsCount(0, ++controller.getThingsCount()[0]);
 				} else {
 					System.out.println("thing1 error!");
 				}
@@ -109,7 +109,7 @@ public class ShopController {
 				int money = controller.getCurMoney();
 				if (money >= 20) {
 					changeMoney(controller.setCurMoney(money -= 20));
-					controller.setCountThings(1, controller.getCountThings()[1] += 5);
+					controller.setThingsCount(1, controller.getThingsCount()[1] += 5);
 				} else {
 					System.out.println("thing2 error!");
 				}
@@ -138,7 +138,7 @@ public class ShopController {
 				int money = controller.getCurMoney();
 				if (money >= 30) {
 					changeMoney(controller.setCurMoney(money -= 30));
-					controller.setCountThings(2, controller.getCountThings()[2] += 5);
+					controller.setThingsCount(2, controller.getThingsCount()[2] += 5);
 				} else {
 					System.out.println("thing3 error!");
 				}

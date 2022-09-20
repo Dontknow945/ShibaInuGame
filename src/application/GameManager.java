@@ -17,15 +17,14 @@ import javafx.scene.image.ImageView;
 
 public class GameManager {
 	private Random rand = new Random();
-	private List<GameObject> dogList = new ArrayList<>();
-	private List<GameObject> dogVisible;
+	private List<Dog> dogList = new ArrayList<>();
+	private List<Dog> dogVisible;
 	private WhiteDog white;
 	private GrayDog gray;
 	private WatermelonDog watermelon;
 	private LightBrownDog lightbrown;
 	private ButterflyDog butterfly;
 	private long lastUpdateTime = 0;
-	private int gameTime = 0, timeCount = 0;
     
     public GameManager(ImageView whitev, ImageView grayv, ImageView watermelonv, ImageView lightbrownv, ImageView butterflyv)
     {
@@ -46,13 +45,7 @@ public class GameManager {
     public void draw(long timestamp){
     	final double elapsedSeconds = (timestamp - lastUpdateTime) / 1_000_000_000.0 ;
     	
-    	int curTime = (int) (timestamp / 1000000000);
-    	if (gameTime != curTime) {
-    		gameTime = curTime;
-    		timeCount++;
-    	}
-    	
-        for(GameObject dog:dogList){
+        for(Dog dog:dogList){
         	checkBound(dog);
         	doDogActions(elapsedSeconds, dog);
         }
@@ -60,7 +53,7 @@ public class GameManager {
         lastUpdateTime = timestamp;
     }
     
-    private void checkBound(GameObject dog) {
+    private void checkBound(Dog dog) {
 		if (dog.imagev.getTranslateX() > dog.maxX) {
 			dog.x = dog.maxX;
 			dog.xDirection *= -1;
@@ -70,14 +63,15 @@ public class GameManager {
 		}
 	}
     
-    private void doDogActions(double elapsedSeconds, GameObject dog) {
-    	if (timeCount - dog.lastTime == dog.changeDirTime) {
+    private void doDogActions(double elapsedSeconds, Dog dog) {
+    	int gameTime = Main.getController().getGameTime();
+    	if (gameTime - dog.lastTime == dog.changeDirTime) {
     		dog.xDirection *= -1;
-    		dog.setTime(timeCount);
+    		dog.setTime(gameTime);
         }
     	
-    	dog.pose = dog.speed == 0 ? 0 : dog.xDirection == 1 ? 1 : 2;
-    	dog.setImage();
+    	turnSide(dog);
+    	
     	dog.x += elapsedSeconds * dog.speed * dog.xDirection;
     	dog.setTranslate();
     }
@@ -86,11 +80,25 @@ public class GameManager {
 		if (dogVisible.size() != 0) {
 			int randDog = rand.nextInt(dogVisible.size());
 			dogVisible.get(randDog).imagev.setVisible(true);
+			dogVisible.get(randDog).setTime(Main.getController().getGameTime());
 			dogVisible.remove(randDog);
 		}
 	}
     
-    public void changeSpeed(int speed, int dog){
-    	dogList.get(dog).speed = speed;
+    public void changeSpeed(int speed, int dogIndex){
+    	dogList.get(dogIndex).speed = speed;
+    	turnSide(dogList.get(dogIndex));
+    }
+    
+    public void turnSide(Dog dog) {
+    	if(dog.speed == 0) {
+    		dog.stop();
+    	} else if(dog.xDirection == 1) {
+    		dog.turnRight();
+    	} else if(dog.xDirection == -1) {
+			dog.turnLeft();
+		} else {
+			System.out.println("turn error");
+		}
     }
 }

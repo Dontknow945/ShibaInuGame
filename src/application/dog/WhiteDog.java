@@ -1,5 +1,7 @@
-package application;
+package application.dog;
 
+import application.GameObject;
+import application.ImageUtility;
 import javafx.scene.image.ImageView;
 
 public class WhiteDog extends GameObject {

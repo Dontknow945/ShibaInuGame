@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import application.dog.ButterflyDog;
+import application.dog.GrayDog;
+import application.dog.LightBrownDog;
+import application.dog.WatermelonDog;
+import application.dog.WhiteDog;
 import javafx.scene.image.ImageView;
 
 /*

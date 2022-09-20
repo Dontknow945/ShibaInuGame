@@ -1,10 +1,10 @@
 package application.controller;
 
 import java.io.File;
-import java.util.Random;
 
 import application.GameManager;
 import application.ImageUtility;
+import application.Tree;
 import javafx.animation.AnimationTimer;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -30,7 +30,7 @@ public class Controller {
 	private MediaPlayer mediaplayer;
 	private GameManager gameManager;
 	private SceneController sceneController;
-	private Random rand = new Random();
+	private Tree treeInstance;
 	
 	private static Image numberImage[] = {ImageUtility.num0, ImageUtility.num1, ImageUtility.num2, ImageUtility.num3, ImageUtility.num4, ImageUtility.num5, ImageUtility.num6, ImageUtility.num7, ImageUtility.num8, ImageUtility.num9};
 	private ImageView[] fruits = new ImageView[4];
@@ -39,15 +39,13 @@ public class Controller {
 	
 	private static int currentMoney = 100;
 	private static int[] countThings = {0, 0, 0, 0, 0};
-	private int treeSec = 0;
-	private long treeTime = 0;
-	private boolean seed = false;
-	private boolean treeTimeChanged = false;
+	private static int gameTime = 0;
 
 	@FXML
 	private void initialize() {
 		gameManager = new GameManager(white, gray, waterMelon, lightBrown, butterfly);
 		mediaplayer = new MediaPlayer(new Media(new File("src/resources/sound/dogsound.mp3").toURI().toString()));
+		treeInstance = new Tree(tree);
 		
 		fruits[0] = fruit1;
 		fruits[1] = fruit2;
@@ -70,68 +68,10 @@ public class Controller {
 			@Override
 			public void handle(long timestamp) {
 				gameManager.draw(timestamp);
-
-				// tree
-				if (treeTimeChanged) {
-					treeTime = timestamp;
-					treeTimeChanged = false;
-				}
+				gameTime = (int) (timestamp / 1000000000);
 				
-				if (seed) {
-					int treeLife = (int) ((timestamp - treeTime) / 1000000000);
-					
-					if (treeSec != treeLife) {
-						treeSec = treeLife;
-						
-						switch (treeSec) {
-						case 2:
-							tree.setImage ( ImageUtility.tree );
-							break;
-						case 4:
-							tree.setImage ( ImageUtility.tree2 );
-				    		int randbug = rand.nextInt(3);
-				    		switch (randbug) {
-				    		case 0:
-				    			bug1.setVisible(true);
-				    			break;
-				    		case 1:
-				    			bug2.setVisible(true);
-				    			break;
-				    		case 2:
-				    			bug1.setVisible(true);
-				    			bug2.setVisible(true);
-				    			break;
-				    		default:
-				    			break;
-				    		}
-							break;
-						case 6:
-							if(bug1.isVisible() || bug2.isVisible()){
-				    			tree.setImage ( ImageUtility.tree4 );
-				    			changeMoney(currentMoney-=20);
-				    		}else{
-				    			for (int i=0; i<fruits.length; i++) {
-				    				fruits[i].setVisible(true);
-				    			}
-				    		}
-							break;
-						case 8:
-							bug1.setVisible(false);
-							bug2.setVisible(false);
-				    		tree.setImage ( ImageUtility.tree3 );
-				    		for (int i=0; i<fruits.length; i++) {
-				    			if(fruits[i].isVisible()) {
-				    				fruits[i].setVisible(false);
-				    				currentMoney-=5;
-				    			}
-				    		}
-				    		changeMoney(currentMoney);
-				    		seed = false;
-							break;
-						default:
-							break;
-						}
-					}
+				if(treeInstance.getPlanted()) {
+					treeInstance.grow();
 				}
 			}
 		};
@@ -325,11 +265,11 @@ public class Controller {
 		mainThing1.setOnMouseClicked(new EventHandler() {
 			@Override
 			public void handle(Event arg0) {
-				if (seed == false && countThings[0] >= 1) {
+				if(countThings[0] >= 1 && !treeInstance.getPlanted()) {
 					--countThings[0];
 					changeThingCount(0);
-					seed = true;
-					treeTimeChanged = true;
+					treeInstance.setTime(gameTime);
+					treeInstance.setPlanted(true);
 				} else {
 					System.out.println("mt1 error!");
 				}
@@ -423,6 +363,24 @@ public class Controller {
 	
 	public void setCountThings(int thing, int count) {
 		countThings[thing] = count;
+	}
+	
+	public int getGameTime() {
+		return gameTime;
+	}
+	
+	public ImageView getBugView(int bug) {
+		if(bug == 1) {
+			return bug1;
+		} else if (bug == 2) {
+			return bug2;
+		} else {
+			return null;
+		}
+	}
+	
+	public ImageView[] getFruits() {
+		return fruits;
 	}
 	
 	public void changeMoney(int currentMoney) {

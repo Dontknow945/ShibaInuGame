@@ -7,5 +7,4 @@ module TestJavaFx {
 	opens application to javafx.graphics, javafx.fxml;
 	opens application.controller to javafx.graphics, javafx.fxml;
 	opens application.dog to javafx.graphics, javafx.fxml;
-	opens application.treeStates to javafx.graphics, javafx.fxml;
 }

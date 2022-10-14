@@ -2,6 +2,7 @@ package application.controller;
 
 import application.ImageUtility;
 import application.Main;
+import application.SceneManager;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,7 +18,7 @@ public class ShopController {
 	
 	private ImageView[] moneys = new ImageView[5];
 	private Image[] numberImage;
-	private Controller controller;
+	private MainController controller;
 	
 	@FXML
 	private void initialize() {
@@ -50,7 +51,7 @@ public class ShopController {
 		shopClose.setOnMouseClicked(new EventHandler() {
 			@Override
 			public void handle(Event arg0) {
-				SceneController.getInstance(scene).activate("start");
+				SceneManager.getInstance(scene).activate("start");
 				controller.changeMoney(controller.getCurMoney());
 				for(int i=0; i<controller.getThingsCount().length; i++) {
 					controller.changeThingCount(i);

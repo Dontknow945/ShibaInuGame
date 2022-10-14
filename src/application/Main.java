@@ -1,9 +1,8 @@
 package application;
 	
-import application.controller.Controller;
+import application.controller.MainController;
 import application.controller.InfoController;
 import application.controller.PictureController;
-import application.controller.SceneController;
 import application.controller.ShopController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +12,7 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
-	private static Controller controller = new Controller();
+	private static MainController controller = new MainController();
 	private static ShopController shopController = new ShopController();
 	private static InfoController infoController = new InfoController();
 	private static PictureController pictureController = new PictureController();
@@ -25,7 +24,7 @@ public class Main extends Application {
 	        fxmlLoader.setController(shopController);
 	        Pane root = fxmlLoader.load();
 	        Scene scene = new Scene (root, 980, 633);
-	        SceneController sceneController = SceneController.getInstance(scene);
+	        SceneManager sceneController = SceneManager.getInstance(scene);
 	        sceneController.addScene("shop", root);
 	        shopController.setScene(scene);
 	        
@@ -58,7 +57,7 @@ public class Main extends Application {
 		}
 	}
 	
-	public static Controller getController() {
+	public static MainController getController() {
 		return controller;
 	}
 	

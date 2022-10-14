@@ -11,11 +11,7 @@ import application.dog.WatermelonDog;
 import application.dog.WhiteDog;
 import javafx.scene.image.ImageView;
 
-/*
-* This class manage the object in game.
-*/
-
-public class GameManager {
+public class DogManager {
 	private Random rand = new Random();
 	private List<Dog> dogList = new ArrayList<>();
 	private List<Dog> dogVisible;
@@ -26,7 +22,7 @@ public class GameManager {
 	private ButterflyDog butterfly;
 	private long lastUpdateTime = 0;
     
-    public GameManager(ImageView whitev, ImageView grayv, ImageView watermelonv, ImageView lightbrownv, ImageView butterflyv)
+    public DogManager(ImageView whitev, ImageView grayv, ImageView watermelonv, ImageView lightbrownv, ImageView butterflyv)
     {
         white = new WhiteDog(whitev);
         gray = new GrayDog(grayv);

@@ -2,8 +2,9 @@ package application.controller;
 
 import java.io.File;
 
-import application.GameManager;
+import application.DogManager;
 import application.ImageUtility;
+import application.SceneManager;
 import application.Tree;
 import javafx.animation.AnimationTimer;
 import javafx.event.Event;
@@ -15,7 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-public class Controller {
+public class MainController {
 	
 	
 	@FXML
@@ -28,8 +29,8 @@ public class Controller {
 
 	private AnimationTimer rectangleAnimation;
 	private MediaPlayer mediaplayer;
-	private GameManager gameManager;
-	private SceneController sceneController;
+	private DogManager gameManager;
+	private SceneManager sceneController;
 	private Tree treeInstance;
 	
 	private static Image numberImage[] = {ImageUtility.num0, ImageUtility.num1, ImageUtility.num2, ImageUtility.num3, ImageUtility.num4, ImageUtility.num5, ImageUtility.num6, ImageUtility.num7, ImageUtility.num8, ImageUtility.num9};
@@ -43,7 +44,7 @@ public class Controller {
 
 	@FXML
 	private void initialize() {
-		gameManager = new GameManager(white, gray, waterMelon, lightBrown, butterfly);
+		gameManager = new DogManager(white, gray, waterMelon, lightBrown, butterfly);
 		mediaplayer = new MediaPlayer(new Media(new File("src/resources/sound/dogsound.mp3").toURI().toString()));
 		treeInstance = new Tree(tree);
 		
@@ -80,7 +81,7 @@ public class Controller {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setScene(Scene scene) {
-		sceneController = SceneController.getInstance(scene);
+		sceneController = SceneManager.getInstance(scene);
 		
 		/* mouse enter */
 		picture.setOnMouseEntered(new EventHandler() {

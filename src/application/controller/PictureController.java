@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.ImageUtility;
+import application.SceneManager;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -35,7 +36,7 @@ public class PictureController {
 		pictureClose.setOnMouseClicked(new EventHandler() {
 			@Override
 			public void handle(Event arg0) {
-				SceneController.getInstance(scene).activate("start");
+				SceneManager.getInstance(scene).activate("start");
 			}
 		});
 	}

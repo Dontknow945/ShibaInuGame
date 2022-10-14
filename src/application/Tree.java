@@ -2,7 +2,7 @@ package application;
 
 import java.util.Random;
 
-import application.controller.Controller;
+import application.controller.MainController;
 import javafx.scene.image.ImageView;
 
 public class Tree {
@@ -96,7 +96,7 @@ public class Tree {
 	}
 	
 	class TreeState implements State {
-		Controller controller = Main.getController();
+		MainController controller = Main.getController();
 		
 		@Override
 		public void grow(Tree tree) {
@@ -126,7 +126,7 @@ public class Tree {
 	}
 	
 	class FinalState implements State {
-		Controller controller = Main.getController();
+		MainController controller = Main.getController();
 		
 		@Override
 		public void grow(Tree tree) {
